@@ -65,9 +65,9 @@ Press **Win+R**, type "**cmd**", then press **Ctrl+Shift+Enter**.
 
 Switch to the command window, and enter the following command to run the program:
 
-	```cmd
-	python mian.py
-	```
+```cmd
+python mian.py
+```
 
 Enter the **Chinese Pinyin** names of the desired boon and equation successively.
 
