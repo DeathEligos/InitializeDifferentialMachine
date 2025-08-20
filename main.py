@@ -15,7 +15,7 @@ from mypackage.recognize import Recognizer
 from mypackage.operate import Operator
 from mypackage.config import *
 from mypackage.exceptions import *
-from mypackage.utils import setup_logger
+from mypackage.utils import setup_logger, scale_coords
 
 
 def _set_targets(target: Dict[str, str]) -> None:
@@ -50,6 +50,9 @@ def main() -> None:
         setup_logger()
         root_logger = logging.getLogger(__name__)
 
+        # Record the screen scale factor.
+        root_logger.debug(f"Screen scale: {scale_x}, {scale_y};")
+
         # Check if game is open.
         is_open = FindWindow(None, GAME_WINDOW)
         if not is_open:
@@ -67,13 +70,13 @@ def main() -> None:
         # Create an interface recognizer.
         interface_matcher = Recognizer(
             templates_dir = INTERFACE_TEMPL_DIR,
-            id_to_file_name = {id: id for id in INTERFACE_REGIONS.keys()},
+            id_to_file_name = {key: key for key in INTERFACE_REGIONS.keys()},
             confidence_threshold = INTERFACE_MATCH_THRESHOLD,
-            id_to_coordinate = INTERFACE_REGIONS
+            id_to_coordinate = {key: scale_coords(value) for key, value in INTERFACE_REGIONS.items()}
         )
         # Create a operator.
         my_operator = Operator(
-            id_to_coordinate = OPTION_REGIONS,
+            id_to_coordinate = {key: scale_coords(value) for key, value in OPTION_REGIONS.items()},
             targets = target
         )
 
@@ -86,7 +89,7 @@ def main() -> None:
             # Match and update current interface.
             _current_interface_id = interface_matcher.match()
             if _current_interface_id == "unmatched":
-                root_logger.info("Undefined interface;")
+                root_logger.warning("Undefined interface;")
             else:
                 # Each time entering the start game interface, the counter plus one.
                 if _current_interface_id == "start_game":
