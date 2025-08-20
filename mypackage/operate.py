@@ -11,7 +11,6 @@ from time import sleep
 from mypackage.recognize import Recognizer
 from mypackage.config import *
 from mypackage.exceptions import TargetAchievedError
-from mypackage.utils import scale_coords
 
 
 class Operator:
@@ -43,12 +42,6 @@ class Operator:
 
         # State variables.
         self._current_selection: Tuple[bool] = [False, False]   # Record the choices made
-
-        # Scale button position.
-        self._my_default = scale_coords(DEFAULT)
-        self._my_roll = scale_coords(ROLL)
-        self._my_confirm = {key: scale_coords(value) for key, value in CONFIRM.items()}
-        self._my_interface_regions = {key: scale_coords(value) for key, value in INTERFACE_REGIONS.items()}
 
         # Logger.
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -137,23 +130,23 @@ class Operator:
                 self._logger.info(f"Select the target option [{my_option}] and config;\n")
                 self._mouse_click(self.id_to_coordinate[my_option])
                 sleep(SELECT_TO_CONFIRM_TIME)
-                self._mouse_click(self._my_confirm[interface_id])
+                self._mouse_click(CONFIRM[interface_id])
                 self._update_selection(interface_id)
                 return my_option
 
             # Match failed. If the unrolled bonns interface is currently in, roll it and call itself with is_rolled = True
             elif interface_id == "select_golden_bloods_boon" and is_rolled == False:
                 self._logger.info("Roll the golden blood's boon;")
-                self._mouse_click(self._my_roll)
+                self._mouse_click(ROLL)
                 self._logger.info(f"Wait {ROOL_ANIMATION_TIME}s for the rolling animation playing;")
                 sleep(ROOL_ANIMATION_TIME)
                 return self._select(interface_id, is_rolled = True)
 
         # Select the default option and confirm.
         self._logger.info("Select the default option and confirm;\n")
-        self._mouse_click(self._my_default)
+        self._mouse_click(DEFAULT)
         sleep(SELECT_TO_CONFIRM_TIME)
-        self._mouse_click(self._my_confirm[interface_id])
+        self._mouse_click(CONFIRM[interface_id])
         return "opt_default"
 
     def operate(self, interface_id: str) -> None:
@@ -170,7 +163,7 @@ class Operator:
 
             case "start_game" | "select_conv" | "conv_calculus" | "run_calculus" | "restart_game" | "hint" | "exit":
                 # Fixed process, click on the screen center directly.
-                self._logger.info(f"Click on the position: {self._mouse_click(self._my_interface_regions[interface_id])};\n")
+                self._logger.info(f"Click on the position: {self._mouse_click(INTERFACE_REGIONS[interface_id])};\n")
 
             case "select_golden_bloods_boon" | "select_equation" | "select_oddity" | "select_blessing" | "select_weighted_curio":
                 # Selection interface.
@@ -183,7 +176,7 @@ class Operator:
 
             case "in_game":
                 # Entered the game without achieving the target, execute the restart process.
-                self._update_selection(id)
+                self._update_selection(interface_id)
                 self._logger.info(f"Press the keyboard: {self._keyboard_press(27)}(ASCII);\n")
 
             case _:
