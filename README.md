@@ -8,6 +8,8 @@ Designed to roll for a desired starting props combination (boon & equation).
 
 *The original intention of developing this tool is not to undermine the game's roguelike element, but to enable a better and more convenient experience of the interesting combination developed by players.*
 
+<u>The game's display mode does not use proportional aspect ratio scaling, and there are also adjustments to UI size. Therefore, this program only supports monitors with a 1920×1080 resolution (some monitors allow resolution adjustment).</u>
+
 ## 2. File Structure
 
 ```plaintext
@@ -59,7 +61,7 @@ Press **Win+R**, type "**cmd**", then press **Ctrl+Shift+Enter**.
 	pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 	```
 
-3. Open the game "Honkai: Star Rail", ensure the screen is in **1920×1080 fullscreen** mode, and the player has entered the **"Start Game" interface** in "Differentiated Universe".
+3. Open the game "Honkai: Star Rail", ensure the display mode is set in **1920×1080 fullscreen** mode, and the player has entered the **"Start Game" interface** in "Differentiated Universe".
 
 ### 3.4. Run the Program
 
