@@ -12,7 +12,6 @@ import logging
 from PIL import Image
 
 from mypackage.exceptions import TemplateNotFoundError
-from mypackage.config import scale_x, scale_y
 
 
 class Recognizer:
@@ -56,7 +55,7 @@ class Recognizer:
         self._load_templates()
 
 
-    def _image_pretreat(self, image: Union[Image.Image, numpy.ndarray], is_cv: bool = False) -> numpy.ndarray:
+    def _image_pretreat(self, image: Union[Image.Image, numpy.ndarray], if_cv: bool = False) -> numpy.ndarray:
         """
         Pretreat the image.
 
@@ -68,7 +67,7 @@ class Recognizer:
             np.ndarray: treted image data
         """
 
-        if is_cv:
+        if if_cv:
             return image
         else:
             return cv2.cvtColor(numpy.array(image), cv2.COLOR_RGB2GRAY)
@@ -121,12 +120,8 @@ class Recognizer:
             if template is None:
                 raise TemplateNotFoundError(template_path)
 
-            # Scale to fit resolution.
-            old_size = template.shape
-            new_size = (round(old_size[0] * scale_y), round(old_size[1] * scale_x))
-            cv2.resize(template, new_size, interpolation=cv2.INTER_AREA)
             # Pretreat and record template image data.
-            self._file_name_to_template[file_name] = self._image_pretreat(template, is_cv=True)
+            self._file_name_to_template[file_name] = self._image_pretreat(template, if_cv=True)
 
         # Makesure all characteristic region IDs have corresponding template.
         missing_ids = [id for id in self.id_to_file_name if self.id_to_file_name[id] not in self._file_name_to_template.keys()]

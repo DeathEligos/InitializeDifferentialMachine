@@ -6,9 +6,9 @@ A script for the *Differential Universe* of *Honkai: Star Rail*.
 
 Designed to roll for a desired starting props combination (boon & equation).
 
-*The original intention of developing this tool is not to undermine the game's roguelike element, but to enable a better and more convenient experience of the interesting combination developed by players.*
+*Statement: the original intention of developing this tool is not to undermine the game's roguelike element, but to enable a better and more convenient experience of the interesting combination developed by players.*
 
-<u>The game's display mode does not use proportional aspect ratio scaling, and there are also adjustments to UI size. Therefore, this program only supports monitors with a 1920×1080 resolution (some monitors allow resolution adjustment).</u>
+The game's display mode does not use proportional aspect ratio scaling, and there are also adjustments to UI size. Therefore, this program only supports monitors with a 1920×1080 resolution (some monitors allow resolution adjustment).
 
 ## 2. File Structure
 

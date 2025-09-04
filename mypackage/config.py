@@ -4,7 +4,6 @@ Configuration file.
 
 Defines the configuration of the program:
 * name of window;
-* scaling factor of screen;
 * times of attempt;
 * path of templates;
 * threshold of match;
@@ -14,17 +13,12 @@ Defines the configuration of the program:
 * whitelist of input.
 """
 
-from typing import Dict, Tuple
-from pyautogui import size
+
+from typing import Dict, Tuple, List
 
 
-# -------------------- WINDOW CONFIGURATION --------------------
+# -------------------- WINDOW NAME CONFIGURATION --------------------
 GAME_WINDOW: str = "崩坏：星穹铁道"
-
-
-# -------------------- SCREEN CONFIGURATION --------------------
-resolution_width, resolution_height = size()                            # Current monitor resolution.
-scale_x, scale_y = resolution_width / 1920, resolution_height / 1080    # Coordinates scaling factor.
 
 
 # -------------------- LOOP CONFIGURATION --------------------
@@ -37,7 +31,7 @@ OPTION_TEMPL_DIR: str = "option_templates"
 
 
 # -------------------- MATCH THRESHOLD CONFIGURATION --------------------
-INTERFACE_MATCH_THRESHOLD: float = 0.9
+INTERFACE_MATCH_THRESHOLD: float = 0.95
 OPTION_MATCH_THRESHOLD: float = 0.7
 
 
@@ -50,8 +44,13 @@ SELECT_TO_CONFIRM_TIME: float = 0.5     # Time to wait after selecting before co
 ROOL_ANIMATION_TIME: float = 3          # Animation duration of rolling the boon-selection interface.
 
 
+# -------------------- RANDOM OFFSET CONFIGURATION --------------------
+POSITION_OFFSET: int = 8    # px
+TIME_PAUSE: float = 70      # ms
+
+
 # -------------------- MATCH CHARACTERISTIC REGIONS --------------------
-INTERFACE_REGIONS: Dict[str, Tuple[int, int, int, int]] = {
+INTERFACE_REGIONS: Dict[str, List[Tuple[int, int, int, int]]] = {
     "start_game": (1520, 930, 1650, 980),
     "select_conv": (520, 300, 700, 350),
     "conv_calculus": (1600, 950, 1770, 990),
@@ -68,7 +67,7 @@ INTERFACE_REGIONS: Dict[str, Tuple[int, int, int, int]] = {
     "hint": (1150, 650, 1220, 690),
     "exit": (900, 960, 1040, 1000),
 }
-OPTION_REGIONS: Dict[str, Tuple[int, int, int, int]] = {  
+OPTION_REGIONS: Dict[str, List[Tuple[int, int, int, int]]] = {  
     "select_golden_bloods_boon_1": (289, 810, 647, 836),
     "select_golden_bloods_boon_2": (781, 767, 1139, 793),
     "select_golden_bloods_boon_3": (1273, 810, 1631, 836),
